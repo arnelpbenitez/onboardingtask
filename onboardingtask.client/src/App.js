@@ -1,9 +1,4 @@
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import { NavMenu } from "./components/navbar/NavMenu";
 import { Container } from "semantic-ui-react";
@@ -20,10 +15,7 @@ function App() {
 				<Container>
 					<NavMenu />
 					<Routes>
-						<Route
-							path="/"
-							render={() => <Navigate to="/customer" />}
-						/>
+						<Route path="/" element={<Customer />} />
 						<Route path="/customer" element={<Customer />} />
 						<Route path="/product" element={<Product />} />
 						<Route path="/store" element={<Store />} />
