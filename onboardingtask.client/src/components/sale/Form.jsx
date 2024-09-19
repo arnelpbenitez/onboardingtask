@@ -8,7 +8,7 @@ export default class SaleForm extends Component {
 		store: this.props.record?.store ?? "",
 		customer: this.props.record?.customer ?? "",
 		product: this.props.record?.product ?? "",
-		dateSold: this.props.record?.dateSold ?? "",
+		dateSold: this.props.record?.dateSold ?? new Date(),
 		recordId: 0,
 		customers: [],
 		products: [],
@@ -22,7 +22,10 @@ export default class SaleForm extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.recordId !== this.props.recordId) {
+		if (
+			prevProps.recordId !== this.props.recordId &&
+			this.props.recordId !== 0
+		) {
 			this.setState({
 				recordId: this.props.recordId,
 				open: true,
@@ -46,8 +49,9 @@ export default class SaleForm extends Component {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
-	handleChangeDate = (e, data) => {
-		this.setState({ dateSold: data.value });
+	handleChangeDate = (event, data) => {
+		if (this.state.dateSold !== data.value)
+			this.setState({ dateSold: data.value });
 	};
 
 	handleSubmit = async (e) => {
@@ -110,11 +114,8 @@ export default class SaleForm extends Component {
 								<SemanticDatepicker
 									name="dateSold"
 									onChange={this.handleChangeDate}
-									value={
-										this.props.data.dateSold
-											? new Date(this.props.data.dateSold)
-											: new Date()
-									}
+									selected={this.state.startDate}
+									autoComplete="off"
 								/>
 							</Form.Field>
 							<Form.Field>
